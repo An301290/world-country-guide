@@ -1,26 +1,40 @@
 import React from "react";
 import {
   AppBar,
+  Box,
+  PaletteMode,
   Toolbar,
   Typography,
-  useTheme,
   useMediaQuery,
-  Box,
+  useTheme,
 } from "@mui/material";
 import DarkModeToggle from "../fields/DarkModeToggle";
 import { stylesNavBar } from "./stylesNavBar";
 
-const NavBar = () => {
+type NavBarProps = {
+  mode: PaletteMode;
+  handleThemeChange: () => void;
+};
+
+const NavBar: React.FC<NavBarProps> = ({ mode, handleThemeChange }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <AppBar>
+    <AppBar
+      sx={{
+        backgroundColor:
+          mode === "dark" ? theme.palette.background.default : "white",
+      }}
+    >
       <Toolbar>
         <Box sx={stylesNavBar}>
-          <Typography variant={isSmallScreen ? "h6" : "h4"}>
+          <Typography
+            variant={isSmallScreen ? "h6" : "h4"}
+            sx={{ color: mode === "dark" ? "white" : "black" }}
+          >
             Where in the World?
           </Typography>
-          <DarkModeToggle />
+          <DarkModeToggle mode={mode} handleThemeChange={handleThemeChange} />
         </Box>
       </Toolbar>
     </AppBar>

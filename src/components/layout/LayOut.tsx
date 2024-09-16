@@ -1,18 +1,26 @@
-import React from 'react';
-import {Container, Box} from '@mui/material';
+import React, { ReactNode } from "react";
+import { Box, Container, PaletteMode } from "@mui/material";
 import NavBar from "./NavBar";
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
-    return (
-        <>
-            <NavBar/>
-            <Container>
-                <Box my={2}>
-                    {children}
-                </Box>
-            </Container>
-        </>
-    );
+type LayoutProps = {
+  mode: PaletteMode;
+  handleThemeChange: () => void;
+  children: ReactNode;
+};
+
+const Layout: React.FC<LayoutProps> = ({
+  mode,
+  handleThemeChange,
+  children,
+}) => {
+  return (
+    <>
+      <NavBar mode={mode} handleThemeChange={handleThemeChange} />
+      <Container>
+        <Box my={2}>{children}</Box>
+      </Container>
+    </>
+  );
 };
 
 export default Layout;

@@ -1,36 +1,32 @@
-import React, { useState } from "react";
-import {
-  createTheme,
-  ThemeProvider,
-  CssBaseline,
-  Switch,
-  FormControlLabel,
-} from "@mui/material";
-import { PaletteMode } from "@mui/material";
+import React from "react";
+import { Button, CssBaseline, PaletteMode } from "@mui/material";
+import NightlightOutlinedIcon from "@mui/icons-material/NightlightOutlined";
+import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 
-const DarkModeToggle: React.FC = () => {
-  const [mode, setMode] = useState<PaletteMode>("light");
+type DarkModeProps = {
+  mode: PaletteMode;
+  handleThemeChange: () => void;
+};
 
-  const theme = createTheme({
-    palette: {
-      mode: mode,
-    },
-  });
-
-  const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMode(event.target.checked ? "dark" : "light");
-  };
-
+const DarkModeToggle: React.FC<DarkModeProps> = ({
+  mode,
+  handleThemeChange,
+}) => {
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <CssBaseline />
-      <FormControlLabel
-        control={
-          <Switch checked={mode === "dark"} onChange={handleThemeChange} />
-        }
-        label={mode === "dark" ? "Dark Mode" : "Light Mode"}
-      />
-    </ThemeProvider>
+      <Button
+        onClick={handleThemeChange}
+        sx={{ color: mode === "dark" ? "white" : "black" }}
+      >
+        {mode === "dark" ? (
+          <WbSunnyOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
+        ) : (
+          <NightlightOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
+        )}
+        {mode === "dark" ? "Light Mode" : "Dark Mode"}
+      </Button>
+    </>
   );
 };
 
