@@ -17,7 +17,9 @@ const Layout: React.FC<LayoutProps> = ({
     <>
       <NavBar mode={mode} handleThemeChange={handleThemeChange} />
       <Container>
-        <Box my={2}>{children}</Box>
+        <Box my={2} sx={{ marginTop: "100px" }}>
+          {children}
+        </Box>
       </Container>
     </>
   );
