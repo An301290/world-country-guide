@@ -1,13 +1,38 @@
-import React, { useState } from "react";
-import { TextField, InputAdornment } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { TextField, InputAdornment, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { fetchCountryByName } from "../../services/apiService";
 
 const SearchField = () => {
   const [countryName, setCountryName] = useState("");
+  const [countryData, setCountryData] = useState(null);
 
-  const handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCountryName(event.target.value);
+  const handleCountryChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const name = event.target.value;
+    setCountryName(name);
+    if (name) {
+      try {
+        const data = await fetchCountryByName(name);
+        setCountryData(data);
+      } catch (error) {
+        console.error("Error fetching country data:", error);
+      }
+    } else {
+      setCountryData(null);
+    }
   };
+
+  useEffect(() => {
+    if (countryData) {
+      console.log(countryData);
+    }
+  }, [countryData]);
+
+  console.log("countryData", countryData);
+  console.log("countryName", countryName);
+
   return (
     <>
       <TextField
