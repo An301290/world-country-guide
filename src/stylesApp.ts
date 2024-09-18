@@ -3,6 +3,7 @@ export const mainBoxLayout = (isSmallScreen: boolean) => ({
   flexDirection: isSmallScreen ? "column" : "row",
   justifyContent: "space-between",
   width: "100%",
+  px: 0,
 });
 
 export const stylesBoxComponents = (isSmallScreen: boolean) => ({

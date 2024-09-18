@@ -11,6 +11,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import SearchField from "./components/fields/SearchField";
 import SelectField from "./components/fields/SelectField";
 import { mainBoxLayout, stylesBoxComponents } from "./stylesApp";
+import NavBar from "./components/layout/NavBar";
+import CountryCard from "./components/cards/CountryCard";
 
 function App() {
   const [mode, setMode] = useState<PaletteMode>("light");
@@ -30,6 +32,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <LayOut mode={mode} handleThemeChange={handleThemeChange}>
+        <NavBar mode={mode} handleThemeChange={handleThemeChange} />
         <Box sx={mainBoxLayout(isSmallScreen)}>
           <Box sx={stylesBoxComponents(isSmallScreen)}>
             <SearchField />
@@ -38,6 +41,7 @@ function App() {
             <SelectField />
           </Box>
         </Box>
+        <CountryCard />
       </LayOut>
     </ThemeProvider>
   );

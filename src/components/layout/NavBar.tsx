@@ -27,7 +27,7 @@ const NavBar: React.FC<NavBarProps> = ({ mode, handleThemeChange }) => {
       }}
     >
       <Toolbar>
-        <Box sx={stylesNavBar}>
+        <Box sx={stylesNavBar(isSmallScreen)}>
           <Typography
             variant={isSmallScreen ? "h6" : "h4"}
             sx={{ color: mode === "dark" ? "white" : "black" }}
