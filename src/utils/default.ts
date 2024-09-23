@@ -8,3 +8,12 @@ export const mappedDataCountry = (country: any) => ({
   languages: country.languages,
   area: country.area,
 });
+
+export const optionsRegions = [
+  { label: "All", id: 0 },
+  { label: "Africa", id: 1 },
+  { label: "Americas", id: 2 },
+  { label: "Asia", id: 3 },
+  { label: "Europe", id: 4 },
+  { label: "Oceania", id: 5 },
+];

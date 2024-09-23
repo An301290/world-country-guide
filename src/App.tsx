@@ -26,7 +26,7 @@ import {
   fetchAllCountries,
   fetchCountriesByRegion,
 } from "./services/apiService";
-import { CountryCardProps } from "./types/types";
+import { CountryCardProps, RegionType } from "./types/types";
 import { mappedDataCountry } from "./utils/default";
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
   const [allCountriesData, setAllCountriesData] = useState<CountryCardProps[]>(
     [],
   );
-  const [countryRegion, setCountryRegion] = useState("");
+  const [countryRegion, setCountryRegion] = useState<RegionType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -73,13 +73,39 @@ function App() {
     }
   };
 
-  const handleRegionChange = async (region: string) => {
+  const handleRegionChange = async (region: RegionType | null) => {
     setCountryRegion(region);
+    if (region) {
+      try {
+        setLoading(true);
+        const data = await fetchCountriesByRegion(region.label);
+        const mappedData = data.map((country: any) =>
+          mappedDataCountry(country),
+        );
+        setAllCountriesData(mappedData);
+        setLoading(false);
+      } catch (error) {
+        console.error(
+          `Error fetching countries data for region ${region.label}:`,
+          error,
+        );
+        setError(`Error fetching countries data for region ${region.label}.`);
+        setLoading(false);
+      }
+    }
   };
 
   useEffect(() => {
-    fetchAllCountriesData();
-  }, []);
+    if (countryRegion) {
+      if (countryRegion.label === "All") {
+        fetchAllCountriesData();
+      } else {
+        handleRegionChange(countryRegion);
+      }
+    } else {
+      fetchAllCountriesData();
+    }
+  }, [countryRegion]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -104,7 +130,10 @@ function App() {
               />
             </Box>
             <Box sx={stylesBoxComponents(isSmallScreen)}>
-              <SelectField handleRegionChange={handleRegionChange} />
+              <SelectField
+                countryRegion={countryRegion}
+                setCountryRegion={setCountryRegion}
+              />
             </Box>
           </Box>
           <CountryCard

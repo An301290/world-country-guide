@@ -14,7 +14,10 @@ export type CountryCardProps = {
   languages: Languages;
   area: number;
 };
-
+export type RegionType = {
+  label: string;
+  id: number;
+};
 export type SearchFieldProps = {
   countryName: string;
   handleCountryChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
