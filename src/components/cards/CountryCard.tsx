@@ -1,20 +1,27 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { CountryCardProps } from "../../types/types";
 import { stylesMainBoxCard } from "../styles/stylesComponents";
 
 type CountryCardPropsWithAllCountries = {
   allCountriesData: CountryCardProps[];
   isSmallScreen: boolean;
+  countryName: string;
 };
 
 const CountryCard: React.FC<CountryCardPropsWithAllCountries> = ({
   allCountriesData,
   isSmallScreen,
+  countryName,
 }) => {
+  const filteredCountries = allCountriesData.filter((country) => {
+    return countryName
+      ? country.officialName.toLowerCase().includes(countryName.toLowerCase())
+      : true;
+  });
   return (
     <Box sx={stylesMainBoxCard(isSmallScreen)}>
-      {allCountriesData.map((country, index) => (
+      {filteredCountries.map((country, index) => (
         <Card key={index} sx={{ width: 250, mt: 5 }}>
           <CardMedia
             component="img"

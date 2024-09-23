@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import DarkModeToggle from "../fields/DarkModeToggle";
+import DarkModeButton from "../buttons/DarkModeButton";
 import { stylesNavBar } from "./stylesNavBar";
 
 type NavBarProps = {
@@ -34,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = ({ mode, handleThemeChange }) => {
           >
             Where in the World?
           </Typography>
-          <DarkModeToggle mode={mode} handleThemeChange={handleThemeChange} />
+          <DarkModeButton mode={mode} handleThemeChange={handleThemeChange} />
         </Box>
       </Toolbar>
     </AppBar>

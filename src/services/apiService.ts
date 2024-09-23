@@ -12,12 +12,12 @@ export const fetchAllCountries = async () => {
   }
 };
 
-export const fetchCountryByName = async (name: string) => {
+export const fetchCountriesByRegion = async (region: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/name/${name}`);
+    const response = await axios.get(`${API_BASE_URL}/region/${region}`);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching country data for ${name}:`, error);
+    console.error(`Error fetching countries data for region ${region}:`, error);
     throw error;
   }
 };

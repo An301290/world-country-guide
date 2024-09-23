@@ -2,6 +2,7 @@ import React from "react";
 import { Autocomplete, TextField } from "@mui/material";
 
 const optionsRegions = [
+  { label: "All", id: 0 },
   { label: "Africa", id: 1 },
   { label: "Americas", id: 2 },
   { label: "Asia", id: 3 },
@@ -9,7 +10,11 @@ const optionsRegions = [
   { label: "Oceania", id: 5 },
 ];
 
-const SelectField = () => {
+type SelectFieldProps = {
+  handleRegionChange: (region: string) => void;
+};
+
+const SelectField: React.FC<SelectFieldProps> = ({ handleRegionChange }) => {
   return (
     <>
       <Autocomplete

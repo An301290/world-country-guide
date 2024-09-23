@@ -8,7 +8,7 @@ type DarkModeProps = {
   handleThemeChange: () => void;
 };
 
-const DarkModeToggle: React.FC<DarkModeProps> = ({
+const DarkModeButton: React.FC<DarkModeProps> = ({
   mode,
   handleThemeChange,
 }) => {
@@ -30,4 +30,4 @@ const DarkModeToggle: React.FC<DarkModeProps> = ({
   );
 };
 
-export default DarkModeToggle;
+export default DarkModeButton;

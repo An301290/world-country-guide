@@ -22,23 +22,20 @@ import {
   SelectField,
   CountryCard,
 } from "./components";
-import { fetchAllCountries, fetchCountryByName } from "./services/apiService";
-import { CountryCardProps } from "./types/types";
 import {
-  countryDataInitialState,
-  getCountryDataObject,
-  mappedDataCountry,
-} from "./utils/default";
+  fetchAllCountries,
+  fetchCountriesByRegion,
+} from "./services/apiService";
+import { CountryCardProps } from "./types/types";
+import { mappedDataCountry } from "./utils/default";
 
 function App() {
   const [mode, setMode] = useState<PaletteMode>("light");
   const [countryName, setCountryName] = useState("");
-  const [countryDataByName, setCountryDataByName] = useState<CountryCardProps>(
-    countryDataInitialState,
-  );
   const [allCountriesData, setAllCountriesData] = useState<CountryCardProps[]>(
     [],
   );
+  const [countryRegion, setCountryRegion] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,18 +57,6 @@ function App() {
   ) => {
     const name = event.target.value;
     setCountryName(name);
-    if (name) {
-      try {
-        const data = await fetchCountryByName(name);
-        const country = data[0];
-        const countryDataObject = getCountryDataObject(country);
-        setCountryDataByName(countryDataObject);
-      } catch (error) {
-        console.error("Error fetching country data:", error);
-      }
-    } else {
-      setCountryDataByName(countryDataByName);
-    }
   };
 
   const fetchAllCountriesData = async () => {
@@ -88,15 +73,13 @@ function App() {
     }
   };
 
+  const handleRegionChange = async (region: string) => {
+    setCountryRegion(region);
+  };
+
   useEffect(() => {
     fetchAllCountriesData();
   }, []);
-
-  useEffect(() => {
-    if (countryDataByName) {
-      console.log(countryDataByName);
-    }
-  }, [countryDataByName]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -113,7 +96,6 @@ function App() {
       ) : (
         <LayOut mode={mode} handleThemeChange={handleThemeChange}>
           <NavBar mode={mode} handleThemeChange={handleThemeChange} />
-
           <Box sx={mainBoxLayout(isSmallScreen)}>
             <Box sx={stylesBoxComponents(isSmallScreen)}>
               <SearchField
@@ -122,12 +104,13 @@ function App() {
               />
             </Box>
             <Box sx={stylesBoxComponents(isSmallScreen)}>
-              <SelectField />
+              <SelectField handleRegionChange={handleRegionChange} />
             </Box>
           </Box>
           <CountryCard
             allCountriesData={allCountriesData}
             isSmallScreen={isSmallScreen}
+            countryName={countryName}
           />
         </LayOut>
       )}
