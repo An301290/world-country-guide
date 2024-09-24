@@ -13,6 +13,9 @@ export type CountryCardProps = {
   subregion: string;
   languages: Languages;
   area: number;
+  currencies: string;
+  borders: string[];
+  tld: string;
 };
 export type RegionType = {
   label: string;

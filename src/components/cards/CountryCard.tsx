@@ -7,12 +7,14 @@ type CountryCardPropsWithAllCountries = {
   allCountriesData: CountryCardProps[];
   isSmallScreen: boolean;
   countryName: string;
+  handleCardClick: (country: CountryCardProps) => void;
 };
 
 const CountryCard: React.FC<CountryCardPropsWithAllCountries> = ({
   allCountriesData,
   isSmallScreen,
   countryName,
+  handleCardClick,
 }) => {
   const filteredCountries = allCountriesData.filter((country) => {
     return countryName
@@ -22,7 +24,11 @@ const CountryCard: React.FC<CountryCardPropsWithAllCountries> = ({
   return (
     <Box sx={stylesMainBoxCard(isSmallScreen)}>
       {filteredCountries.map((country, index) => (
-        <Card key={index} sx={{ width: 250, mt: 5 }}>
+        <Card
+          key={index}
+          sx={{ width: 250, mt: 5 }}
+          onClick={() => handleCardClick(country)}
+        >
           <CardMedia
             component="img"
             height="140"

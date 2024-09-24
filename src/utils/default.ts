@@ -7,6 +7,13 @@ export const mappedDataCountry = (country: any) => ({
   subregion: country.subregion,
   languages: country.languages,
   area: country.area,
+  borders: country.borders,
+  tld: country.tld,
+  currencies: country.currencies
+    ? Object.values(country.currencies)
+        .map((currency: any) => currency.name)
+        .join(", ")
+    : "N/A",
 });
 
 export const optionsRegions = [

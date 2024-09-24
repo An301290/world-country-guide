@@ -28,6 +28,7 @@ import {
 } from "./services/apiService";
 import { CountryCardProps, RegionType } from "./types/types";
 import { mappedDataCountry } from "./utils/default";
+import CountryCardDetail from "./components/cards/CountryCardDetail";
 
 function App() {
   const [mode, setMode] = useState<PaletteMode>("light");
@@ -36,6 +37,8 @@ function App() {
     [],
   );
   const [countryRegion, setCountryRegion] = useState<RegionType | null>(null);
+  const [selectedCountry, setSelectedCountry] =
+    useState<CountryCardProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -59,11 +62,17 @@ function App() {
     setCountryName(name);
   };
 
+  const handleCardClick = (country: CountryCardProps) => {
+    setSelectedCountry(country);
+  };
+
   const fetchAllCountriesData = async () => {
     try {
       setLoading(true);
       const data = await fetchAllCountries();
-      const mappedData = data.map((country: any) => mappedDataCountry(country));
+      const mappedData = data.map((country: CountryCardProps) =>
+        mappedDataCountry(country),
+      );
       setAllCountriesData(mappedData);
       setLoading(false);
     } catch (error) {
@@ -136,11 +145,19 @@ function App() {
               />
             </Box>
           </Box>
-          <CountryCard
-            allCountriesData={allCountriesData}
-            isSmallScreen={isSmallScreen}
-            countryName={countryName}
-          />
+          {selectedCountry ? (
+            <CountryCardDetail
+              selectedCountry={selectedCountry}
+              handleBack={() => setSelectedCountry(null)}
+            />
+          ) : (
+            <CountryCard
+              allCountriesData={allCountriesData}
+              isSmallScreen={isSmallScreen}
+              countryName={countryName}
+              handleCardClick={handleCardClick}
+            />
+          )}
         </LayOut>
       )}
     </ThemeProvider>
