@@ -29,6 +29,7 @@ import {
 import { CountryCardProps, RegionType } from "./types/types";
 import { mappedDataCountry } from "./utils/default";
 import CountryCardDetail from "./components/cards/CountryCardDetail";
+import ScrollToTopButton from "./components/buttons/ScrollToTopButton";
 
 function App() {
   const [mode, setMode] = useState<PaletteMode>("light");
@@ -64,6 +65,10 @@ function App() {
 
   const handleCardClick = (country: CountryCardProps) => {
     setSelectedCountry(country);
+  };
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const fetchAllCountriesData = async () => {
@@ -131,32 +136,38 @@ function App() {
       ) : (
         <LayOut mode={mode} handleThemeChange={handleThemeChange}>
           <NavBar mode={mode} handleThemeChange={handleThemeChange} />
-          <Box sx={mainBoxLayout(isSmallScreen)}>
-            <Box sx={stylesBoxComponents(isSmallScreen)}>
-              <SearchField
-                handleCountryChange={handleCountryChange}
-                countryName={countryName}
-              />
-            </Box>
-            <Box sx={stylesBoxComponents(isSmallScreen)}>
-              <SelectField
-                countryRegion={countryRegion}
-                setCountryRegion={setCountryRegion}
-              />
-            </Box>
-          </Box>
           {selectedCountry ? (
             <CountryCardDetail
               selectedCountry={selectedCountry}
               handleBack={() => setSelectedCountry(null)}
             />
           ) : (
-            <CountryCard
-              allCountriesData={allCountriesData}
-              isSmallScreen={isSmallScreen}
-              countryName={countryName}
-              handleCardClick={handleCardClick}
-            />
+            <>
+              <Box sx={mainBoxLayout(isSmallScreen)}>
+                <Box sx={stylesBoxComponents(isSmallScreen)}>
+                  <SearchField
+                    handleCountryChange={handleCountryChange}
+                    countryName={countryName}
+                  />
+                </Box>
+                <Box sx={stylesBoxComponents(isSmallScreen)}>
+                  <SelectField
+                    countryRegion={countryRegion}
+                    setCountryRegion={setCountryRegion}
+                  />
+                </Box>
+              </Box>
+              <CountryCard
+                allCountriesData={allCountriesData}
+                isSmallScreen={isSmallScreen}
+                countryName={countryName}
+                handleCardClick={handleCardClick}
+              />
+              <ScrollToTopButton
+                handleScrollToTop={handleScrollToTop}
+                label="Scroll to Top"
+              />
+            </>
           )}
         </LayOut>
       )}
