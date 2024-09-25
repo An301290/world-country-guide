@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { SearchFieldProps } from "../../types/types";
 
-const SearchField = () => {
-  const [countryName, setCountryName] = useState("");
-
-  const handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCountryName(event.target.value);
-  };
+const SearchField: React.FC<SearchFieldProps> = ({
+  handleCountryChange,
+  countryName,
+}) => {
   return (
     <>
       <TextField
