@@ -6,9 +6,7 @@ A responsive web application built with **React**, **TypeScript**, and **Materia
 
 ## 📸 Preview
 
-> _Add your project screenshots here_
-
-| ![Dark Mode](./assets/searchCountry.png) |
+![App Preview](./src/assets/searchCountry.PNG)
 
 ---
 
